@@ -4,6 +4,7 @@ namespace Game.Intro
 {
     using System.Collections;
     using SM;
+    using HUD;
 
     public class Intro : MonoState
     {
@@ -11,17 +12,16 @@ namespace Game.Intro
         [SerializeField] private PixelObjectsController _titlePartTwo;
         [SerializeField] private GameObject _creators;
         [SerializeField] private GameObject _recreator;
-        [SerializeField] private GameObject _hud;
 
         public bool Complete { get; private set; }
 
         public override void OnEnter()
         {
-            _hud.SetActive(false);
             _creators.SetActive(false);
             _recreator.SetActive(false);
             _titlePartOne.Reset();
             _titlePartTwo.Reset();
+            gameObject.SetActive(true);
 
             Complete = false;
 
@@ -49,9 +49,7 @@ namespace Game.Intro
             _creators.SetActive(true);
             yield return new WaitForSeconds(1);
             _recreator.SetActive(true);
-            yield return new WaitForSeconds(1);
-            _hud.SetActive(true);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
             Complete = true;
         }
     }

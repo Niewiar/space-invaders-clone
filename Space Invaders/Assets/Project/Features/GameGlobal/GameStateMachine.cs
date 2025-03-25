@@ -4,18 +4,24 @@ namespace Game.GameGlobal
 {
     using SM;
     using Intro;
+    using Menu;
+    using Gameplay;
 
     public class GameStateMachine : MonoBehaviour
     {
         private readonly StateMachine _sm = new();
+        private bool _gameStarted;
 
         private void Awake()
         {
-            Intro intro = FindFirstObjectByType<Intro>();
-            MainMenu mainMenu = new();
+            //Get game components
+            Intro intro = FindFirstObjectByType<Intro>(FindObjectsInactive.Include);
 
-            _sm.AddTransition(intro, mainMenu, new PredicateFunc(() => intro.Complete));
+            //Set transitions
+            _sm.AddTransition(intro, GameInstance.Menu, new PredicateFunc(() => intro.Complete));
+            _sm.AddTransition(GameInstance.Menu, GameInstance.Gameplay, new PredicateFunc(() => GameInstance.Menu.GameStarted));
 
+            //Start intro
             _sm.SetState(intro);
         }
 
