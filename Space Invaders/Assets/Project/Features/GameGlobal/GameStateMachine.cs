@@ -3,6 +3,7 @@ using UnityEngine;
 namespace Game.GameGlobal
 {
     using SM;
+    using Intro;
 
     public class GameStateMachine : MonoBehaviour
     {
