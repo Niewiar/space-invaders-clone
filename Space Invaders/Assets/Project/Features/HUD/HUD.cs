@@ -20,7 +20,23 @@ namespace Game.HUD
 
             GameInstance.Menu.OnMenuEtered += delegate { gameObject.SetActive(true); };
             GameInstance.Gameplay.OnGameStarted += delegate { _controls.SetActive(true); };
-            GameInstance.Gameplay.OnGameEnded += delegate { _controls.SetActive(false); };
+
+            GameInstance.Gameplay.OnGameEnded += delegate 
+            {
+                _currentScore.SetText("-");
+                _lives.SetText("-");
+                _controls.SetActive(false); 
+            };
+
+            GameInstance.Gameplay.OnPointsChanged += points =>
+            {
+                _currentScore.text = points.ToString();
+            };
+
+            GameInstance.Gameplay.OnLivesChanged += lives =>
+            {
+                _lives.text = lives.ToString();
+            };
 
             gameObject.SetActive(false);
         }
@@ -28,10 +44,7 @@ namespace Game.HUD
         private void BaseSetup()
         {
             _currentScore.SetText("-");
-
-            _bestScoreOwner.SetText("Niewiar");
-            _bestScore.SetText("5000");
-
+            _bestScore.SetText("-"); //todo load record 
             _lives.SetText("-");
         }
     }

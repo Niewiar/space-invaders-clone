@@ -10,7 +10,6 @@ namespace Game.GameGlobal
     public class GameStateMachine : MonoBehaviour
     {
         private readonly StateMachine _sm = new();
-        private bool _gameStarted;
 
         private void Awake()
         {
@@ -20,6 +19,7 @@ namespace Game.GameGlobal
             //Set transitions
             _sm.AddTransition(intro, GameInstance.Menu, new PredicateFunc(() => intro.Complete));
             _sm.AddTransition(GameInstance.Menu, GameInstance.Gameplay, new PredicateFunc(() => GameInstance.Menu.GameStarted));
+            _sm.AddTransition(GameInstance.Gameplay, GameInstance.Menu, new PredicateFunc(() => GameInstance.Gameplay.GameEnded));
 
             //Start intro
             _sm.SetState(intro);

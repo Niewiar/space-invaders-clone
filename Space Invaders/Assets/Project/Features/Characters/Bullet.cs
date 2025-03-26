@@ -29,7 +29,7 @@ namespace Game.Characters
                 return;
             }
 
-            transform.position += Vector3.up * _speed * Time.deltaTime;
+            transform.position += Vector3.up * _yDir * _speed * Time.deltaTime;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

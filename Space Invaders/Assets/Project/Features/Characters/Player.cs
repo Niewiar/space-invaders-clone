@@ -1,15 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Game.Characters
 {
     using GameGlobal;
-    using System;
-    using System.Collections;
-    using UnityEngine.InputSystem;
 
-    public class Player : Character
+    public class Player : MonoBehaviour
     {
-        [SerializeField] private float _speed = 3;
         [SerializeField] private Bullet _bullet;
 
         private InputAction _moveAction;
@@ -38,6 +35,18 @@ namespace Game.Characters
             gameObject.SetActive(false);
         }
 
+        private void Update()
+        {
+            if (!gameObject.activeInHierarchy)
+            {
+                return;
+            }
+
+            float x = transform.position.x + _moveAction.ReadValue<float>() * Time.deltaTime * GameInstance.Config.PlayerSpeed;
+            x = Mathf.Clamp(x, -3.5f, 3.5f);
+            transform.position = new Vector3(x, -4, 0);
+        }
+
         private void Shot(InputAction.CallbackContext obj)
         {
             if (!gameObject.activeInHierarchy || _bullet.IsActive)
@@ -48,16 +57,9 @@ namespace Game.Characters
             _bullet.Activate(transform.position + Vector3.up * .5f, 1);
         }
 
-        private void Update()
+        private void OnTriggerEnter(Collider other)
         {
-            if (!gameObject.activeInHierarchy)
-            {
-                return;
-            }
-
-            float x = transform.position.x + _moveAction.ReadValue<float>() * Time.deltaTime * _speed;
-            x = Mathf.Clamp(x, -3.5f, 3.5f);
-            transform.position = new Vector3(x, -4, 0);
+            GameInstance.Gameplay.PlayerLives--;
         }
     }
 }
