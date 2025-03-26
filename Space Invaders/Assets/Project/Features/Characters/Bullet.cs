@@ -2,10 +2,10 @@
 
 namespace Game.Characters
 {
+    using GameGlobal;
+
     public class Bullet : MonoBehaviour
     {
-        [SerializeField] private float _speed = 3;
-
         private int _yDir;
 
         public bool IsActive => gameObject.activeInHierarchy;
@@ -29,7 +29,7 @@ namespace Game.Characters
                 return;
             }
 
-            transform.position += Vector3.up * _yDir * _speed * Time.deltaTime;
+            transform.position += Vector3.up * _yDir * GameInstance.Config.BulletSpeed * Time.deltaTime;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

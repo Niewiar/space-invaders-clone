@@ -1,15 +1,18 @@
 ﻿using System.Collections;
-using System;
 using System.Linq;
 using UnityEngine;
 
 namespace Game.Characters
 {
     using GameGlobal;
+    using System.Collections.Generic;
 
     public class EnemiesPool : MonoBehaviour
     {
+        [SerializeField] private EnemyBulletsPool _enemyBullets;
+
         private EnemiesRow[] _enemiesRows;
+        private readonly List<Vector3> _startPositions = new();
 
         private void Start()
         {
@@ -18,12 +21,13 @@ namespace Game.Characters
             for (int i = 0; i < _enemiesRows.Length; i++)
             {
                 _enemiesRows[i].Setup(GameInstance.Config.GetEnemiesRowData(i));
+                _startPositions.Add(_enemiesRows[i].transform.position);
             }
 
             GameInstance.Gameplay.OnGameStarted += delegate
             {
                 gameObject.SetActive(true);
-                StartCoroutine(MoveRowsCorouine());
+                ResetPool();
             };
 
             GameInstance.Gameplay.OnGameEnded += delegate
@@ -49,14 +53,14 @@ namespace Game.Characters
                         continue;
                     }
 
+                    yield return new WaitForSeconds(CalculateRowSpeed());
+
                     row.Move(new(horizontalDelta, 0, 0));
 
                     if (row.IsOnEdge())
                     {
                         isOnEdge = true;
                     }
-
-                    yield return new WaitForSeconds(CalculateRowSpeed());
                 }
 
                 if (isOnEdge)
@@ -70,7 +74,7 @@ namespace Game.Characters
 
                         row.Move(new(0, -.5f, 0));
 
-                        if (row.transform.position.y <= -3.5f)
+                        if (row.transform.position.y <= -4f)
                         {
                             GameInstance.Gameplay.ForceGameEnd();
                         }
@@ -81,6 +85,21 @@ namespace Game.Characters
                     yield return new WaitForSeconds(CalculateRowSpeed());
                 }
             }
+
+            ResetPool();
+        }
+
+        private void ResetPool()
+        {
+            for (int i = 0; i < _enemiesRows.Length; i++)
+            {
+                _enemiesRows[i].transform.position = _startPositions[i];
+                _enemiesRows[i].ShowAllEnemies();
+            }
+
+            StopAllCoroutines();
+            StartCoroutine(MoveRowsCorouine());
+            StartCoroutine(Fire());
         }
 
         private float CalculateRowSpeed()
@@ -101,6 +120,45 @@ namespace Game.Characters
             }
 
             return result;
+        }
+
+        private IEnumerator Fire()
+        {
+            while(true)
+            {
+                yield return new WaitForSeconds(Random.Range(1, 2));
+
+                int fireRandom = Random.Range(0, 4);
+
+                if (fireRandom == 0)
+                {
+                    continue;
+                }
+
+                Dictionary<int, Vector3> possiblePos = new();
+
+                foreach (var row in _enemiesRows)
+                {
+                    foreach ((int index, Vector3 pos) in row.GetPossibleFirePositions())
+                    {
+                        if (possiblePos.ContainsKey(index))
+                        {
+                            continue;
+                        }
+
+                        possiblePos.Add(index, pos);
+                    }
+                }
+
+                int amount = Mathf.Min(possiblePos.Count, fireRandom);
+
+                for (int i = 0; i < amount; i++)
+                {
+                    int random = Random.Range(0, possiblePos.Count);
+                    _enemyBullets.ActiveBullet(possiblePos.ElementAt(random).Value);
+                    possiblePos.Remove(possiblePos.ElementAt(random).Key);
+                }
+            }
         }
     }
 }

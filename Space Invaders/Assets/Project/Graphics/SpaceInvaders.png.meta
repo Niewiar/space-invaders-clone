@@ -571,6 +571,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: SpaceInvaders_19
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 52
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 737f55911e47c0146a93802ace304ebc
+      internalID: 681939928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -596,6 +618,7 @@ TextureImporter:
       SpaceInvaders_16: 7727678308096188875
       SpaceInvaders_17: 5074163038422519379
       SpaceInvaders_18: 8690330881884133979
+      SpaceInvaders_19: 681939928
       SpaceInvaders_2: 7300022034202718653
       SpaceInvaders_3: 8841146485251879895
       SpaceInvaders_4: 7841723954438648023

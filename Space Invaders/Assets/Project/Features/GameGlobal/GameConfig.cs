@@ -15,6 +15,8 @@ namespace Game.GameGlobal
         public float EnemiesRowSpeedupValue;
         public int DestroyedEnemiesAmoutToSpeedup;
 
+        public float BulletSpeed;
+
         public List<EnemieConfig> EnemiesConfigs;
         public List<EnemieRowConfig> EnemieRowsConfigs;
 

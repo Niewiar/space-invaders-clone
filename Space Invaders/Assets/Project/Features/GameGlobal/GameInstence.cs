@@ -51,6 +51,8 @@ namespace Game.GameGlobal
                 Config.EnemiesRowSpeedupValue = .2f;
                 Config.DestroyedEnemiesAmoutToSpeedup = 10;
 
+                Config.BulletSpeed = 6;
+
                 Config.EnemiesConfigs = new()
                 {
                     new EnemieConfig() { 

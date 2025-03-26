@@ -57,7 +57,7 @@ namespace Game.Characters
             _bullet.Activate(transform.position + Vector3.up * .5f, 1);
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
             GameInstance.Gameplay.PlayerLives--;
         }
