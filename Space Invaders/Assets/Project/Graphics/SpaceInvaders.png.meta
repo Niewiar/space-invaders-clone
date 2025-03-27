@@ -580,7 +580,7 @@ TextureImporter:
         width: 5
         height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -589,6 +589,28 @@ TextureImporter:
       bones: []
       spriteID: 737f55911e47c0146a93802ace304ebc
       internalID: 681939928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpaceInvaders_20
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 67
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0df44ccba9191ca40b705f82b1cedb6a
+      internalID: -965313135
       vertices: []
       indices: 
       edges: []
@@ -620,6 +642,7 @@ TextureImporter:
       SpaceInvaders_18: 8690330881884133979
       SpaceInvaders_19: 681939928
       SpaceInvaders_2: 7300022034202718653
+      SpaceInvaders_20: -965313135
       SpaceInvaders_3: 8841146485251879895
       SpaceInvaders_4: 7841723954438648023
       SpaceInvaders_5: 7099710728136048336

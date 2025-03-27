@@ -15,6 +15,12 @@ namespace Game.GameGlobal
         public float EnemiesRowSpeedupValue;
         public int DestroyedEnemiesAmoutToSpeedup;
 
+        public int UfoMinPoints;
+        public int UfoMaxPoints;
+        public float UfoMinShowTime;
+        public float UfoMaxShowTime;
+        public float UfoSpeed;
+
         public float BulletSpeed;
 
         public List<EnemieConfig> EnemiesConfigs;

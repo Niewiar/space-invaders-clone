@@ -19,7 +19,8 @@ namespace Game.GameGlobal
             //Set transitions
             _sm.AddTransition(intro, GameInstance.Menu, new PredicateFunc(() => intro.Complete));
             _sm.AddTransition(GameInstance.Menu, GameInstance.Gameplay, new PredicateFunc(() => GameInstance.Menu.GameStarted));
-            _sm.AddTransition(GameInstance.Gameplay, GameInstance.Menu, new PredicateFunc(() => GameInstance.Gameplay.GameEnded));
+            _sm.AddTransition(GameInstance.Gameplay, GameInstance.GameEnd, new PredicateFunc(() => GameInstance.Gameplay.GameEnded));
+            _sm.AddTransition(GameInstance.GameEnd, GameInstance.Gameplay, new PredicateFunc(() => GameInstance.GameEnd.GameStarted));
 
             //Start intro
             _sm.SetState(intro);

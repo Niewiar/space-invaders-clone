@@ -38,13 +38,18 @@ namespace Game.HUD
                 _lives.text = lives.ToString();
             };
 
+            GameInstance.GameEnd.OnRecordChanged += delegate
+            {
+                _bestScore.SetText(PlayerPrefs.GetInt("Record").ToString());
+            };
+
             gameObject.SetActive(false);
         }
 
         private void BaseSetup()
         {
             _currentScore.SetText("-");
-            _bestScore.SetText("-"); //todo load record 
+            _bestScore.SetText(PlayerPrefs.GetInt("Record").ToString());
             _lives.SetText("-");
         }
     }

@@ -12,6 +12,7 @@ namespace Game.GameGlobal
         public static GameplayController Gameplay;
         public static Menu Menu;
         public static GameConfig Config;
+        public static GameEnd GameEnd;
 
         private static string CONFIG_PATH => Path.Combine(Application.persistentDataPath, "GameConfig.json");
 
@@ -20,8 +21,14 @@ namespace Game.GameGlobal
         {
             Menu = UnityEngine.Object.FindFirstObjectByType<Menu>(FindObjectsInactive.Include);
             Gameplay = UnityEngine.Object.FindFirstObjectByType<GameplayController>(FindObjectsInactive.Include);
+            GameEnd = UnityEngine.Object.FindFirstObjectByType<GameEnd>(FindObjectsInactive.Include);
 
             LoadConfig();
+
+            if (!PlayerPrefs.HasKey("Record"))
+            {
+                PlayerPrefs.SetInt("Record", 0);
+            }
 
             GameObject gameObj = new GameObject("#Game Instance#");
 
@@ -50,6 +57,12 @@ namespace Game.GameGlobal
                 Config.StartEnemiesRowSpeed = 1f;
                 Config.EnemiesRowSpeedupValue = .2f;
                 Config.DestroyedEnemiesAmoutToSpeedup = 10;
+
+                Config.UfoMinPoints = 100;
+                Config.UfoMaxPoints = 300;
+                Config.UfoMinShowTime = 60;
+                Config.UfoMaxShowTime = 120;
+                Config.UfoSpeed = 3;
 
                 Config.BulletSpeed = 6;
 
