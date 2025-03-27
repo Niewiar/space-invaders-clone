@@ -23,6 +23,8 @@ namespace Game.GameGlobal
 
         public float BulletSpeed;
 
+        public int PointsToGetExtraLive;
+
         public List<EnemieConfig> EnemiesConfigs;
         public List<EnemieRowConfig> EnemieRowsConfigs;
 

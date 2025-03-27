@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.IO;
 
 namespace Game.GameGlobal
@@ -23,7 +22,7 @@ namespace Game.GameGlobal
             Gameplay = UnityEngine.Object.FindFirstObjectByType<GameplayController>(FindObjectsInactive.Include);
             GameEnd = UnityEngine.Object.FindFirstObjectByType<GameEnd>(FindObjectsInactive.Include);
 
-            LoadConfig();
+            Config = LoadConfig();
 
             if (!PlayerPrefs.HasKey("Record"))
             {
@@ -37,36 +36,40 @@ namespace Game.GameGlobal
             UnityEngine.Object.DontDestroyOnLoad(gameObj);
         }
 
-        private static void LoadConfig()
+        public static GameConfig LoadConfig()
         {
+            GameConfig config;
+
             if (File.Exists(CONFIG_PATH))
             {
                 string json = File.ReadAllText(CONFIG_PATH);
-                Config = JsonUtility.FromJson<GameConfig>(json);
-                Debug.Log("Config loaded: " + CONFIG_PATH);
+                config = JsonUtility.FromJson<GameConfig>(json);
+                return config;
             }
             else
             {
                 Debug.Log("Config not found. Create new: " + CONFIG_PATH);
-                Config = new GameConfig();
+                config = new GameConfig();
 
-                Config.PlayerStartLives = 3;
+                config.PlayerStartLives = 3;
 
-                Config.PlayerSpeed = 3;
+                config.PlayerSpeed = 3;
 
-                Config.StartEnemiesRowSpeed = 1f;
-                Config.EnemiesRowSpeedupValue = .2f;
-                Config.DestroyedEnemiesAmoutToSpeedup = 10;
+                config.StartEnemiesRowSpeed = 1f;
+                config.EnemiesRowSpeedupValue = .2f;
+                config.DestroyedEnemiesAmoutToSpeedup = 10;
 
-                Config.UfoMinPoints = 100;
-                Config.UfoMaxPoints = 300;
-                Config.UfoMinShowTime = 60;
-                Config.UfoMaxShowTime = 120;
-                Config.UfoSpeed = 3;
+                config.UfoMinPoints = 100;
+                config.UfoMaxPoints = 300;
+                config.UfoMinShowTime = 60;
+                config.UfoMaxShowTime = 120;
+                config.UfoSpeed = 3;
+                
+                config.BulletSpeed = 6;
 
-                Config.BulletSpeed = 6;
-
-                Config.EnemiesConfigs = new()
+                config.PointsToGetExtraLive = 1000;
+                
+                config.EnemiesConfigs = new()
                 {
                     new EnemieConfig() { 
                         KillPoints = 10, 
@@ -91,7 +94,7 @@ namespace Game.GameGlobal
                     }
                 };
 
-                Config.EnemieRowsConfigs = new()
+                config.EnemieRowsConfigs = new()
                 {
                     new EnemieRowConfig() { EnemieIndex = 0 },
                     new EnemieRowConfig() { EnemieIndex = 0 },
@@ -104,6 +107,8 @@ namespace Game.GameGlobal
                 string json = JsonUtility.ToJson(Config, true);
                 File.WriteAllText(CONFIG_PATH, json);
             }
+
+            return config;
         }
     }
 }

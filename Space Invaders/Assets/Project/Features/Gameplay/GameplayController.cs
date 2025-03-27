@@ -15,12 +15,24 @@ namespace Game.Gameplay
 
         public bool GameEnded { get; private set; }
 
+        private int _addedExtraLives;
+
         private int _currentPoints;
         public int CurrentPoints { 
             get => _currentPoints;
             set
             {
                 _currentPoints = value;
+
+                int potentialExtraLives = _currentPoints / GameInstance.Config.PointsToGetExtraLive;
+                potentialExtraLives -= _addedExtraLives;
+
+                if (potentialExtraLives > 0)
+                {
+                    _addedExtraLives += potentialExtraLives;
+                    PlayerLives += potentialExtraLives;
+                }
+
                 OnPointsChanged?.Invoke(_currentPoints);
             }    
         }
@@ -44,6 +56,7 @@ namespace Game.Gameplay
         public override void OnEnter()
         {
             GameEnded = false;
+            _addedExtraLives = 0;
             CurrentPoints = 0;
             PlayerLives = GameInstance.Config.PlayerStartLives;
             OnGameStarted?.Invoke();
