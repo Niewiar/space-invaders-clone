@@ -1,5 +1,7 @@
 # Space Invaders Clone
 
+> **Build:** Zbudowana i spakowana gra znajduje się tutaj: Assets\Build.zip
+
 ## 1. Opis projektu
 
 **Space Invaders Clone** to klon klasycznej gry arcade *Space Invaders* stworzony przy użyciu silnika Unity. Projekt odtwarza podstawową mechanikę oryginału, w której:
