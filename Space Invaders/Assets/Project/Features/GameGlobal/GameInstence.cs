@@ -104,7 +104,7 @@ namespace Game.GameGlobal
 
                 };
 
-                string json = JsonUtility.ToJson(Config, true);
+                string json = JsonUtility.ToJson(config, true);
                 File.WriteAllText(CONFIG_PATH, json);
             }
 
